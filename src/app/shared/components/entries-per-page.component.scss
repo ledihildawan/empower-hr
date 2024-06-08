@@ -1,0 +1,16 @@
+:host {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  .select-wrapper {
+    border: 1px solid #efeff0;
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
+
+    select {
+      outline: 0;
+      border: 0;
+    }
+  }
+}

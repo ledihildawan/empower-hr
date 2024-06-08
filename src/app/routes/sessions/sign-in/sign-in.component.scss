@@ -2,14 +2,10 @@
   height: 100vh;
   display: grid;
   place-items: center;
-  background-color: #edf2f7;
 }
 
 .card {
   padding: 1.25rem 1.25rem 2rem;
-  background: #fff;
-  border-radius: 1rem;
-  box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
   width: 90%;
 
   @media (width >= 425px) {
@@ -49,7 +45,7 @@
 
   &__label {
     label {
-      display: block;
+      display: inline-block;
       margin-bottom: 0.5rem;
       color: #0b0b0c;
       font-size: 0.875rem;
@@ -72,7 +68,7 @@
 
       &:focus {
         outline: 0;
-        border-color: #3e5eff;
+        border-color: #0ba5eb;
       }
     }
   }
@@ -90,7 +86,7 @@
   border-radius: 0.5rem;
   padding: 0.5rem 0.75rem;
   margin-top: 1rem;
-  background-color: #3e5eff;
+  background-color: #0ba5eb;
   color: #fff;
   font-size: 0.875rem;
   font-weight: 500;
@@ -110,6 +106,6 @@
 
   &:focus,
   &:hover {
-    background-color: lighten(#3e5eff, 3.6%);
+    background-color: lighten(#0ba5eb, 3.6%);
   }
 }
