@@ -1,0 +1,61 @@
+<div class="card">
+  <div class="card__header">
+    <div class="card__title">Welcome back</div>
+    <div class="card__subtitle">Please enter your details to sign in.</div>
+  </div>
+
+  <div class="card__separator"></div>
+
+  <div class="card__body">
+    <form class="form" [formGroup]="formGroup">
+      <div class="form__field">
+        <div class="form__label">
+          <label for="username">Username</label>
+        </div>
+        <div class="form__content">
+          <input
+            id="username"
+            type="text"
+            formControlName="username"
+            [value]="formGroup.get('username')?.value"
+            [ngClass]="{
+              error: username?.invalid
+            }"
+          />
+        </div>
+
+        @if (username?.invalid) {
+        <div class="form__error">Username is required.</div>
+        }
+      </div>
+      <div class="form__field">
+        <div class="form__label">
+          <label for="password">Password</label>
+        </div>
+        <div class="form__content">
+          <input
+            id="password"
+            type="password"
+            formControlName="password"
+            [value]="formGroup.get('password')?.value"
+            [ngClass]="{
+              error: password?.invalid
+            }"
+          />
+        </div>
+        @if (password?.invalid) {
+        <div class="form__error">Password is required.</div>
+        }
+      </div>
+
+      <button
+        class="button"
+        type="submit"
+        [disabled]="isSubmitted"
+        (click)="handleSignIn()"
+      >
+        Sign In
+      </button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,115 @@
+:host {
+  height: 100vh;
+  display: grid;
+  place-items: center;
+  background-color: #edf2f7;
+}
+
+.card {
+  padding: 1.25rem 1.25rem 2rem;
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
+  width: 90%;
+
+  @media (width >= 425px) {
+    width: 80%;
+  }
+
+  @media (width >= 600px) {
+    width: 420px;
+  }
+
+  &__header {
+    text-align: center;
+  }
+
+  &__separator {
+    width: 100%;
+    height: 1px;
+    margin: 1.5rem 0;
+    background: #efeff0;
+  }
+
+  &__title {
+    color: #0b0b0c;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+  }
+
+  &__subtitle {
+    font-size: 0.875rem;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  &__label {
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #0b0b0c;
+      font-size: 0.875rem;
+    }
+  }
+
+  &__content {
+    input {
+      width: 100%;
+      display: block;
+      border: 1px solid #efeff0;
+      border-radius: 0.5rem;
+      padding: 0.5rem 0.75rem;
+      color: inherit;
+      transition: border-color 0.25s ease-in-out;
+
+      &.error {
+        border-color: #f88b8b;
+      }
+
+      &:focus {
+        outline: 0;
+        border-color: #3e5eff;
+      }
+    }
+  }
+
+  &__error {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: #f88b8b;
+  }
+}
+
+.button {
+  outline: 0;
+  border: 1px solid transparent;
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  margin-top: 1rem;
+  background-color: #3e5eff;
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 500;
+  appearance: none;
+  cursor: pointer;
+  transition: background-color 0.25s ease-in-out, color 0.25s ease-in-out;
+
+  &:disabled {
+    background-color: #e5e5e5;
+    color: #9f9f9f;
+    cursor: not-allowed;
+
+    &:hover {
+      background-color: lighten(#e5e5e5, 3.6%);
+    }
+  }
+
+  &:focus,
+  &:hover {
+    background-color: lighten(#3e5eff, 3.6%);
+  }
+}
