@@ -10,7 +10,7 @@ import { TableHeadingComponent } from '@shared/components/table-heading/table-he
 import { OnInit, Component } from '@angular/core';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 
-import seedEmployees from './data';
+import employees from '@data/employees';
 
 @Component({
   imports: [
@@ -28,7 +28,7 @@ import seedEmployees from './data';
 })
 export class EmployeesComponent implements OnInit {
   private readonly _initialEmployees: Employee[] =
-    this._localStorageService.get('employees') || seedEmployees;
+    this._localStorageService.get('employees') || employees;
 
   public activeSort!: any;
 
@@ -82,6 +82,8 @@ export class EmployeesComponent implements OnInit {
     this.filteredEmployees = this.filteredEmployees.filter(
       (el: Employee): boolean => el.id !== id
     );
+
+    this.totalItems = this.filteredEmployees.length;
 
     this._toastrService.success(
       'The employee has been successfully deleted from the system.',
@@ -242,7 +244,7 @@ export class EmployeesComponent implements OnInit {
 
   public ngOnInit(): void {
     if (!this._localStorageService.has('employees')) {
-      this._localStorageService.set('employees', seedEmployees);
+      this._localStorageService.set('employees', employees);
     }
   }
 }

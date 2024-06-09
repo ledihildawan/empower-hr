@@ -1,3 +1,61 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  &__error {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: #f88b8b;
+  }
+
+  &__label {
+    label {
+      display: inline-block;
+      margin-bottom: 0.5rem;
+      color: #0b0b0c;
+      font-size: 0.875rem;
+
+      &.required {
+        &::after {
+          content: "*";
+          display: inline-block;
+          margin-left: 0.25rem;
+          color: #f88b8b;
+        }
+      }
+    }
+  }
+}
+
+input,
+textarea {
+  width: 100%;
+  display: block;
+  border: 1px solid #efeff0;
+  border-radius: 1rem;
+  padding: 0.5rem 0.75rem;
+  color: inherit;
+  transition: border-color 0.25s ease-in-out;
+
+  &.error {
+    border-color: #f88b8b;
+  }
+
+  &:focus {
+    outline: 0;
+    border-color: #0ba5eb;
+  }
+}
+
+textarea {
+  resize: none;
+}
+
+input[type="date"].ng-invalid {
+  color: #757575;
+}
+
 .select-wrapper {
   border: 1px solid #efeff0;
   padding: 0.5rem 0.75rem;

@@ -267,7 +267,6 @@
             rows="4"
             placeholder="Enter description"
             formControlName="description"
-            [value]="formGroup.get('description')?.value"
             [class.error]="
               formGroup.get('description')?.invalid &&
               (formGroup.get('description')?.dirty ||

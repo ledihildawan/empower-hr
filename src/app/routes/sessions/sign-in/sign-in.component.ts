@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 import { OnInit, Component } from '@angular/core';
@@ -10,7 +11,7 @@ import {
 } from '@angular/forms';
 
 @Component({
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   selector: 'app-login',
   styleUrl: 'sign-in.component.scss',
   standalone: true,
@@ -28,7 +29,10 @@ export class SignInComponent implements OnInit {
     return this.formGroup.get('password');
   }
 
-  constructor(private readonly _formBuilder: FormBuilder) {}
+  constructor(
+    private readonly _router: Router,
+    private readonly _formBuilder: FormBuilder
+  ) {}
 
   private _setupForm(): void {
     this.formGroup = this._formBuilder.group({
@@ -39,6 +43,16 @@ export class SignInComponent implements OnInit {
 
   public handleSignIn(): void {
     this.isSubmitted = true;
+
+    if (this.formGroup.invalid) {
+      this.formGroup.markAllAsTouched();
+
+      this.isSubmitted = false;
+
+      return;
+    }
+
+    this._router.navigateByUrl('/');
   }
 
   public ngOnInit(): void {

@@ -1,4 +1,38 @@
 :host {
   display: block;
   padding: 2rem 1rem 1rem;
+
+  .card {
+    margin-top: 1.5rem;
+    pointer-events: none;
+
+    @media (width >= 600px) {
+      max-width: 256px;
+    }
+
+    .icon-wrapper {
+      display: inline-block;
+      background-color: #e7f6fd;
+      padding: 0.875rem;
+      border-radius: 50%;
+
+      svg {
+        width: 32px;
+        height: 32px;
+        color: #0ba5eb;
+      }
+    }
+
+    .counter {
+      margin-right: 1rem;
+      font-size: 1.5rem;
+      font-weight: 500;
+    }
+
+    .title {
+      margin-top: 0.25rem;
+      color: #565a5e;
+      font-weight: 500;
+    }
+  }
 }

@@ -24,6 +24,8 @@
     "paths": {
       "@shared": ["app/shared"],
       "@shared/*": ["app/shared/*"],
+      "@data": ["app/data"],
+      "@data/*": ["app/data/*"],
       "@theme": ["app/theme"],
       "@theme/*": ["app/theme/*"],
       "tslib": ["./node_modules/tslib/tslib.d.ts"]

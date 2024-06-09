@@ -17,14 +17,17 @@
             id="username"
             type="text"
             formControlName="username"
-            [value]="formGroup.get('username')?.value"
-            [ngClass]="{
-              error: username?.invalid
-            }"
+            [class.error]="
+              formGroup.get('username')?.invalid &&
+              (formGroup.get('username')?.dirty ||
+                formGroup.get('username')?.touched)
+            "
           />
         </div>
 
-        @if (username?.invalid) {
+        @if (formGroup.get('username')?.invalid &&
+        (formGroup.get('username')?.dirty ||
+        formGroup.get('username')?.touched)) {
         <div class="form__error">Username is required.</div>
         }
       </div>
@@ -37,19 +40,23 @@
             id="password"
             type="password"
             formControlName="password"
-            [value]="formGroup.get('password')?.value"
-            [ngClass]="{
-              error: password?.invalid
-            }"
+            [class.error]="
+              formGroup.get('password')?.invalid &&
+              (formGroup.get('password')?.dirty ||
+                formGroup.get('password')?.touched)
+            "
           />
         </div>
-        @if (password?.invalid) {
+
+        @if (formGroup.get('password')?.invalid &&
+        (formGroup.get('password')?.dirty ||
+        formGroup.get('password')?.touched)) {
         <div class="form__error">Password is required.</div>
         }
       </div>
 
       <button
-        class="button"
+        class="btn btn--primary"
         type="submit"
         [disabled]="isSubmitted"
         (click)="handleSignIn()"
