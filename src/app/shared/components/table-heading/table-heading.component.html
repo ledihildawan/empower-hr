@@ -1,0 +1,22 @@
+<div
+  style="display: inline-flex; align-items: center; gap: 8px; cursor: pointer"
+  (click)="handleClick()"
+>
+  <span>{{ data.label }}</span>
+
+  @if (data.isSort) {
+    <div>
+      @if (active?.order === -1 && active?.key === data.key) {
+        <svg width="10" height="10" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M9.13381 4.50138C9.51864 3.83434 10.4814 3.83434 10.8662 4.50138L16.6348 14.5003C17.0194 15.1669 16.5382 16 15.7686 16H4.23141C3.46175 16 2.98061 15.1669 3.36522 14.5003L9.13381 4.50138Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M16.6348 14.5003C17.0194 15.1669 16.5382 16 15.7686 16H4.23141C3.46175 16 2.98061 15.1669 3.36522 14.5003L9.13381 4.50138C9.51864 3.83434 10.4814 3.83434 10.8662 4.50138L16.6348 14.5003ZM10 9.00332L7.69423 13H12.3058L10 9.00332Z" fill="currentColor"/></svg>
+        } @else {
+        <svg width="10" height="10" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M10 7.00221L5.96282 14H14.0372L10 7.00221ZM10.8662 4.50138C10.4814 3.83434 9.51864 3.83434 9.13381 4.50138L3.36522 14.5003C2.98061 15.1669 3.46175 16 4.23141 16H15.7686C16.5382 16 17.0194 15.1669 16.6348 14.5003L10.8662 4.50138Z" fill="currentColor" /></svg>
+      }
+
+      @if (active?.order === 1 && active?.key === data.key) {
+        <svg width="10" height="10" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M10.8662 15.4986C10.4814 16.1657 9.51864 16.1657 9.13381 15.4986L3.36522 5.49973C2.98061 4.83307 3.46175 4.00001 4.23141 4.00001H15.7686C16.5382 4.00001 17.0194 4.83307 16.6348 5.49973L10.8662 15.4986Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M3.36522 5.49973C2.98061 4.83307 3.46175 4.00001 4.23141 4.00001H15.7686C16.5382 4.00001 17.0194 4.83307 16.6348 5.49973L10.8662 15.4986C10.4814 16.1657 9.51864 16.1657 9.13381 15.4986L3.36522 5.49973ZM10 10.9967L12.3058 7.00001H7.69423L10 10.9967Z" fill="currentColor"/></svg>
+      } @else {
+        <svg fill="none" width="10" xmlns="http://www.w3.org/2000/svg" height="10" viewBox="0 0 20 20"><path fill-rule="evenodd" clip-rule="evenodd" d="M10 12.9978L14.0372 6.00001H5.96282L10 12.9978ZM9.13381 15.4986C9.51864 16.1657 10.4814 16.1657 10.8662 15.4986L16.6348 5.49973C17.0194 4.83307 16.5382 4.00001 15.7686 4.00001H4.23141C3.46175 4.00001 2.98061 4.83307 3.36522 5.49973L9.13381 15.4986Z" fill="currentColor" /></svg>
+      }
+    </div>
+  }
+</div>

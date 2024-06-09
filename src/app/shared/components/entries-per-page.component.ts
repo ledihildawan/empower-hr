@@ -1,8 +1,8 @@
 import { Component, Output } from '@angular/core';
 
 @Component({
-  styleUrl: 'entries-per-page.component.scss',
   selector: 'entries-per-page',
+  styleUrl: 'entries-per-page.component.scss',
   template: `
     <span>Entries per page</span>
     <div class="select-wrapper">

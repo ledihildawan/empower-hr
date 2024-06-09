@@ -1,0 +1,22 @@
+@import "reset";
+
+body {
+  background-color: #edf2f7;
+  color: #2c3136;
+  font-family: "Work Sans", sans-serif;
+  font-optical-sizing: auto;
+}
+
+@import "components/card";
+@import "components/form";
+@import "components/table";
+@import "components/button";
+
+.icon {
+  cursor: pointer;
+  transition: opacity 0.25s ease-in-out;
+
+  &:hover {
+    opacity: 0.6;
+  }
+}

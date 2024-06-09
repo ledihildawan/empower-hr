@@ -8,10 +8,7 @@
 >
   <div style="font-size: 2rem; font-weight: 700">Employees</div>
   <div>
-    <button
-      class="btn btn--primary"
-      (click)="router.navigateByUrl('/employees/add')"
-    >
+    <button class="btn btn--primary" (click)="navigateTo('/employees/add')">
       <svg
         width="20"
         height="20"
@@ -35,7 +32,10 @@
 
 <div class="card">
   <div class="card__actions">
-    <input-search></input-search>
+    <input-search
+      (onClear)="handleClearInputSearch()"
+      (onChange)="handleChangeInputSearch($event)"
+    ></input-search>
 
     <button class="btn btn--outline">
       <svg
@@ -90,11 +90,15 @@
     <table>
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Group</th>
-          <th>Email</th>
-          <th>Birth Date</th>
-          <th>Status</th>
+          @for (column of columns; track column; let index = $index) {
+          <th>
+            <table-heading
+              [data]="column"
+              [active]="activeSort"
+              (onClick)="handleClickTableHeading($event, index)"
+            ></table-heading>
+          </th>
+          }
         </tr>
       </thead>
       <tbody>
@@ -111,47 +115,11 @@
     </table>
   </div>
   <div class="card__footer">
-    <div>Showing 1 to 10 of 100 entries</div>
-    <div style="display: inline-flex; align-items: center; gap: 0.5rem">
-      <button class="btn btn--outline">
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 20 20"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M6.73177 10.6402C6.37821 10.2159 6.43553 9.58537 6.85981 9.2318C7.28409 8.87824 7.91465 8.93556 8.26822 9.35984L13.2682 15.3598C13.6218 15.7841 13.5645 16.4147 13.1402 16.7682C12.7159 17.1218 12.0853 17.0645 11.7318 16.6402L6.73177 10.6402Z"
-            fill="currentColor"
-          />
-          <path
-            d="M8.26822 10.6402C7.91465 11.0645 7.28409 11.1218 6.85981 10.7682C6.43553 10.4147 6.37821 9.78412 6.73177 9.35984L11.7318 3.35984C12.0853 2.93556 12.7159 2.87824 13.1402 3.2318C13.5645 3.58537 13.6218 4.21593 13.2682 4.64021L8.26822 10.6402Z"
-            fill="currentColor"
-          />
-        </svg>
-        <span>Previous</span>
-      </button>
-      <button class="btn btn--outline">
-        <span>Next</span>
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 20 20"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M11.7318 9.35984C12.0854 8.93556 12.7159 8.87824 13.1402 9.2318C13.5645 9.58537 13.6218 10.2159 13.2682 10.6402L8.26825 16.6402C7.91468 17.0645 7.28412 17.1218 6.85984 16.7682C6.43556 16.4147 6.37824 15.7841 6.7318 15.3598L11.7318 9.35984Z"
-            fill="currentColor"
-          />
-          <path
-            d="M6.7318 4.64021C6.37824 4.21593 6.43556 3.58537 6.85984 3.2318C7.28412 2.87824 7.91468 2.93556 8.26825 3.35984L13.2682 9.35984C13.6218 9.78412 13.5645 10.4147 13.1402 10.7682C12.7159 11.1218 12.0854 11.0645 11.7318 10.6402L6.7318 4.64021Z"
-            fill="currentColor"
-          />
-        </svg>
-      </button>
-    </div>
-    <entries-per-page></entries-per-page>
+    <app-pagination
+      [totalItems]="totalItems"
+      [itemsPerPage]="itemsPerPage"
+      (onPageChange)="handlePageChange($event)"
+      (onItemsPerPageChange)="handleItemsPerPageChange($event)"
+    ></app-pagination>
   </div>
 </div>
