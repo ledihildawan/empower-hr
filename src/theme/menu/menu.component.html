@@ -20,7 +20,20 @@
 <nav>
   <ul>
     <li>
-      <a routerLink="/employees" (click)="onClick.emit()">Employees</a>
+      <a
+        routerLink="/dashboard"
+        routerLinkActive="active"
+        (click)="onClick.emit()"
+        >Dashboard</a
+      >
+    </li>
+    <li>
+      <a
+        routerLink="/employees"
+        routerLinkActive="active"
+        (click)="onClick.emit()"
+        >Employees</a
+      >
     </li>
   </ul>
 </nav>

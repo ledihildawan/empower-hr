@@ -1,15 +1,26 @@
 import { CommonModule } from '@angular/common';
-import { EntriesPerPageComponent } from '../entries-per-page.component';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+
+import {
+  Input,
+  OnInit,
+  Output,
+  Component,
+  OnChanges,
+  EventEmitter,
+  SimpleChanges,
+} from '@angular/core';
 
 @Component({
-  imports: [CommonModule, EntriesPerPageComponent],
+  imports: [CommonModule],
   selector: 'app-pagination',
   styleUrl: 'pagination.component.scss',
   standalone: true,
   templateUrl: 'pagination.component.html',
 })
-export class PaginationComponent implements OnInit {
+export class PaginationComponent implements OnInit, OnChanges {
+  @Input()
+  public currentPage!: number;
+
   @Input()
   public totalItems!: number;
 
@@ -23,29 +34,31 @@ export class PaginationComponent implements OnInit {
   private _onItemsPerPageChange = new EventEmitter();
 
   public totalPages!: number;
+  public adjustedEndIdx!: number;
+  public adjustedStartIdx!: number;
 
-  public currentPage: number = 1;
   public pageNumbers: number[] = [];
 
   private _updatePageNumbers(): void {
+    this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+    this.adjustedEndIdx = Math.min(
+      this.currentPage * this.itemsPerPage,
+      this.totalItems
+    );
+    this.adjustedStartIdx =
+      this.currentPage > 1
+        ? this.currentPage * this.itemsPerPage - this.itemsPerPage + 1
+        : Math.min(this.currentPage, this.totalItems);
+
     const maxButtons = 3;
     const half = Math.floor(maxButtons / 2);
 
     let startPage = Math.max(1, this.currentPage - half);
-    let endPage = Math.min(this.totalPages, this.currentPage + half);
+    let endPage = startPage + maxButtons - 1;
 
-    if (endPage - startPage + 1 < maxButtons) {
-      if (this.currentPage <= half) {
-        endPage = Math.min(
-          this.totalPages,
-          endPage + (maxButtons - (endPage - startPage + 1))
-        );
-      } else {
-        startPage = Math.max(
-          1,
-          startPage - (maxButtons - (endPage - startPage + 1))
-        );
-      }
+    if (endPage > this.totalPages) {
+      endPage = this.totalPages;
+      startPage = Math.max(endPage - maxButtons + 1, 1);
     }
 
     this.pageNumbers = [];
@@ -86,8 +99,10 @@ export class PaginationComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+    this._updatePageNumbers();
+  }
 
+  public ngOnChanges(changes: SimpleChanges): void {
     this._updatePageNumbers();
   }
 }

@@ -1,16 +1,22 @@
 import { Router } from '@angular/router';
+import { Employee } from '@shared/interfaces/employee.interface';
 import { CommonModule } from '@angular/common';
+import { StatusComponent } from '@shared/components/status.component';
+import { LocalStorageService } from '@shared/services/local-storage.service';
 import { PaginationComponent } from '@shared/components/pagination/pagination.component';
 import { InputSearchComponent } from '@shared/components/input-search/input-search.component';
 import { TableHeadingComponent } from '@shared/components/table-heading/table-heading.component';
 
 import { OnInit, Component } from '@angular/core';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 
-import data from './data';
+import seedEmployees from './data';
 
 @Component({
   imports: [
     CommonModule,
+    ToastrModule,
+    StatusComponent,
     PaginationComponent,
     InputSearchComponent,
     TableHeadingComponent,
@@ -21,45 +27,39 @@ import data from './data';
   templateUrl: 'list.component.html',
 })
 export class EmployeesComponent implements OnInit {
-  private readonly _initialEmployees: Employee[] = data.map(
-    (el: Employee): any => ({
-      ...el,
-      name: el.firstName + ' ' + el.lastName,
-    })
-  );
+  private readonly _initialEmployees: Employee[] =
+    this._localStorageService.get('employees') || seedEmployees;
 
   public activeSort!: any;
 
   public columns: any[] = [
-    { key: 'name', label: 'Name', order: 0, isSort: true },
+    { key: 'firstName', label: 'Name', order: 0, isSort: true },
     { key: 'group', label: 'Group', order: 0, isSort: true },
     { key: 'email', label: 'Email', order: 0, isSort: true },
     { key: 'birthDate', label: 'Birth Date', order: 0, isSort: true },
     { key: 'status', label: 'Status', order: 0, isSort: true },
   ];
+  public isSorted: boolean = false;
   public isSearched: boolean = false;
   public currentPage: number = 1;
   public itemsPerPage: number = 10;
 
-  public endIndex: number = this.itemsPerPage;
-  public startIndex: number = 0;
+  public endIdx: number = this.itemsPerPage;
+  public startIdx: number = 0;
   public totalItems: number = this._initialEmployees.length;
 
-  public filteredEmployees: Employee[] = [];
+  public filteredEmployees: Employee[] = [...this._initialEmployees];
+  public sliceFilteredEmployees: Employee[] = [];
 
   public get employees(): Employee[] {
-    if (this.isSearched && this.filteredEmployees.length) {
-      return this.filteredEmployees.slice(this.startIndex, this.endIndex);
-    }
-
-    if (this.isSearched && !this.filteredEmployees.length) {
-      return [];
-    }
-
-    return this._initialEmployees.slice(this.startIndex, this.endIndex);
+    return this.filteredEmployees.slice(this.startIdx, this.endIdx);
   }
 
-  constructor(private readonly _router: Router) {}
+  constructor(
+    private readonly _router: Router,
+    private readonly _toastrService: ToastrService,
+    private readonly _localStorageService: LocalStorageService
+  ) {}
 
   private _sort(a: any, b: any, idx: number): number {
     let comparison = 0;
@@ -78,16 +78,44 @@ export class EmployeesComponent implements OnInit {
     this._router.navigateByUrl(path);
   }
 
+  public handleDelete(id: string): void {
+    this.filteredEmployees = this.filteredEmployees.filter(
+      (el: Employee): boolean => el.id !== id
+    );
+
+    this._toastrService.success(
+      'The employee has been successfully deleted from the system.',
+      'Employee Deleted'
+    );
+  }
+
   public handlePageChange(data: any): void {
     this.currentPage = data;
 
-    this.startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    this.startIdx = (this.currentPage - 1) * this.itemsPerPage;
 
-    this.endIndex = this.startIndex + this.itemsPerPage;
+    this.endIdx = this.startIdx + this.itemsPerPage;
   }
 
   public handleClearInputSearch(): void {
     this.isSearched = false;
+    this.endIdx = this.itemsPerPage;
+    this.startIdx = 0;
+    this.currentPage = 1;
+    this.filteredEmployees = [...this._initialEmployees];
+    this.totalItems = this.filteredEmployees.length;
+
+    if (this.activeSort) {
+      this.filteredEmployees = this.filteredEmployees.sort(
+        (a: Employee, b: Employee): number => {
+          const idx: number = this.columns.findIndex(
+            (el: any): boolean => el.key === this.activeSort.key
+          );
+
+          return this._sort(a, b, idx);
+        }
+      );
+    }
   }
 
   public handleClickTableHeading(data: any, index: number): void {
@@ -119,24 +147,72 @@ export class EmployeesComponent implements OnInit {
 
     this.activeSort = this.columns[index];
 
-    if (this.filteredEmployees.length) {
-      this.filteredEmployees.sort((a: Employee, b: Employee): number =>
-        this._sort(a, b, index)
+    if (this.currentPage !== 1) {
+      if (!this.sliceFilteredEmployees.length) {
+        this.sliceFilteredEmployees = this.filteredEmployees.slice(
+          this.startIdx,
+          this.endIdx + 1
+        );
+      }
+
+      const numberOfItemsToRemove: number = this.endIdx - this.startIdx + 1;
+      const dataOnCurrentPage: Employee[] = this.filteredEmployees.slice(
+        this.startIdx,
+        this.endIdx
       );
-    } else {
-      this._initialEmployees.sort((a: Employee, b: Employee): number =>
-        this._sort(a, b, index)
-      );
+
+      dataOnCurrentPage.sort((a: Employee, b: Employee): number => {
+        return this._sort(a, b, index);
+      });
+
+      if (this.columns[index].order === 0) {
+        this.filteredEmployees.splice(
+          this.startIdx,
+          numberOfItemsToRemove,
+          ...this.sliceFilteredEmployees
+        );
+
+        this.sliceFilteredEmployees = [];
+      } else {
+        this.filteredEmployees.splice(
+          this.startIdx,
+          numberOfItemsToRemove,
+          ...dataOnCurrentPage
+        );
+      }
+
+      return;
     }
+
+    if (this.columns[index].order === 0) {
+      this.filteredEmployees = this.isSearched
+        ? this.filteredEmployees
+        : [...this._initialEmployees];
+
+      return;
+    }
+
+    this.filteredEmployees.sort((a: Employee, b: Employee): number =>
+      this._sort(a, b, index)
+    );
   }
 
   public handleChangeInputSearch(q: string): void {
+    this.endIdx = this.itemsPerPage;
+    this.startIdx = 0;
+    this.currentPage = 1;
+
     if (!q && this.isSearched) {
       this.isSearched = false;
+      this.filteredEmployees = [...this._initialEmployees];
+      this.totalItems = this.filteredEmployees.length;
+
+      return;
     }
 
     if (!q) {
       this.filteredEmployees = [];
+      this.totalItems = this.filteredEmployees.length;
 
       return;
     }
@@ -150,26 +226,23 @@ export class EmployeesComponent implements OnInit {
       }
     );
 
+    this.totalItems = this.filteredEmployees.length;
+
     this.isSearched = true;
   }
 
   public handleItemsPerPageChange(data: any): void {
+    this.currentPage = 1;
     this.itemsPerPage = data;
 
-    console.log(Math.ceil(this.totalItems / this.itemsPerPage));
+    this.startIdx = (1 - 1) * this.itemsPerPage;
+
+    this.endIdx = this.startIdx + this.itemsPerPage;
   }
 
-  public ngOnInit(): void {}
-}
-
-interface Employee {
-  email: string;
-  group: string;
-  status: string;
-  username: string;
-  lastName: string;
-  birthDate: string;
-  firstName: string;
-  basicSalary: number;
-  description: string;
+  public ngOnInit(): void {
+    if (!this._localStorageService.has('employees')) {
+      this._localStorageService.set('employees', seedEmployees);
+    }
+  }
 }
