@@ -1,5 +1,6 @@
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { PageTitleComponent } from '@shared/components/page-title.component';
 import { LocalStorageService } from '@shared/services/local-storage.service';
 
 import { OnInit, Component } from '@angular/core';
@@ -15,7 +16,12 @@ import {
 import { isDateGreaterThanToday } from '@shared/validators/isDateGreaterThanToday';
 
 @Component({
-  imports: [CommonModule, ToastrModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    ToastrModule,
+    ReactiveFormsModule,
+    PageTitleComponent,
+  ],
   selector: 'app-add-employee',
   styleUrl: 'add.component.scss',
   standalone: true,

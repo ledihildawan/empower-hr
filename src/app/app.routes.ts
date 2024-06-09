@@ -19,7 +19,8 @@ export const routes: Routes = [
       { path: '500', component: Error500Component },
       {
         path: 'employees',
-        loadChildren: () => import('./routes/employees/employees.routes').then((m) => m.routes),
+        loadChildren: () =>
+          import('./routes/employees/employees.routes').then((m) => m.routes),
       },
     ],
     canActivate: [authenticationGuard],
@@ -29,5 +30,5 @@ export const routes: Routes = [
     path: 'auth',
     children: [{ path: 'sign-in', component: SignInComponent }],
   },
-  { path: '**', redirectTo: 'dashboard' },
+  // { path: '**', redirectTo: 'dashboard' },
 ];

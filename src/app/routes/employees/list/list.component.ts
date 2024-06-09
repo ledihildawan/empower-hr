@@ -2,6 +2,7 @@ import { Router } from '@angular/router';
 import { Employee } from '@shared/interfaces/employee.interface';
 import { CommonModule } from '@angular/common';
 import { StatusComponent } from '@shared/components/status.component';
+import { PageTitleComponent } from '@shared/components/page-title.component';
 import { LocalStorageService } from '@shared/services/local-storage.service';
 import { PaginationComponent } from '@shared/components/pagination/pagination.component';
 import { InputSearchComponent } from '@shared/components/input-search/input-search.component';
@@ -17,6 +18,7 @@ import employees from '@data/employees';
     CommonModule,
     ToastrModule,
     StatusComponent,
+    PageTitleComponent,
     PaginationComponent,
     InputSearchComponent,
     TableHeadingComponent,

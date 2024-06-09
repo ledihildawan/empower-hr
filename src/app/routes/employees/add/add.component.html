@@ -1,36 +1,8 @@
-<div style="margin-bottom: 2rem">
-  <div style="display: flex; align-items: center; gap: 0.5rem">
-    <svg
-      fill="none"
-      class="icon"
-      xmlns="http://www.w3.org/2000/svg"
-      width="20"
-      height="20"
-      viewBox="0 0 20 20"
-      (click)="navigateTo('/employees')"
-    >
-      <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
-        d="M8.97353 14.7682C8.54926 15.1218 7.91869 15.0645 7.56513 14.6402L4.23179 10.6402C3.87823 10.2159 3.93555 9.58537 4.35983 9.2318C4.78411 8.87824 5.41467 8.93556 5.76824 9.35984L9.10157 13.3598C9.45513 13.7841 9.39781 14.4147 8.97353 14.7682Z"
-        fill="currentColor"
-      />
-      <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
-        d="M8.97353 5.2318C9.39781 5.58537 9.45513 6.21593 9.10157 6.64021L5.76824 10.6402C5.41467 11.0645 4.78411 11.1218 4.35983 10.7682C3.93555 10.4147 3.87823 9.78412 4.23179 9.35984L7.56513 5.35984C7.91869 4.93556 8.54926 4.87824 8.97353 5.2318Z"
-        fill="currentColor"
-      />
-      <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
-        d="M5.99997 10C5.99997 9.44772 6.44768 9 6.99997 9L15 9C15.5523 9 16 9.44772 16 10C16 10.5523 15.5523 11 15 11L6.99997 11C6.44768 11 5.99997 10.5523 5.99997 10Z"
-        fill="currentColor"
-      />
-    </svg>
-    <span style="font-size: 2rem; font-weight: 700">Add New Employee</span>
-  </div>
-</div>
+<page-title
+  title="Add New Employee"
+  backToPath="/employees"
+  [useBack]="true"
+></page-title>
 
 <div class="card">
   <div class="card__content">
@@ -45,11 +17,17 @@
             type="text"
             placeholder="Enter first name"
             formControlName="firstName"
-            [class.error]="formGroup.get('firstName')?.invalid && (formGroup.get('firstName')?.dirty || formGroup.get('firstName')?.touched)"
+            [class.error]="
+              formGroup.get('firstName')?.invalid &&
+              (formGroup.get('firstName')?.dirty ||
+                formGroup.get('firstName')?.touched)
+            "
           />
 
-          @if (formGroup.get('firstName')?.invalid && (formGroup.get('firstName')?.dirty || formGroup.get('firstName')?.touched)) {
-            <div class="form__error">First Name is required.</div>
+          @if (formGroup.get('firstName')?.invalid &&
+          (formGroup.get('firstName')?.dirty ||
+          formGroup.get('firstName')?.touched)) {
+          <div class="form__error">First Name is required.</div>
           }
         </div>
       </div>
@@ -63,11 +41,17 @@
             type="text"
             placeholder="Enter last name"
             formControlName="lastName"
-            [class.error]="formGroup.get('lastName')?.invalid && (formGroup.get('lastName')?.dirty || formGroup.get('lastName')?.touched)"
+            [class.error]="
+              formGroup.get('lastName')?.invalid &&
+              (formGroup.get('lastName')?.dirty ||
+                formGroup.get('lastName')?.touched)
+            "
           />
 
-          @if (formGroup.get('lastName')?.invalid && (formGroup.get('lastName')?.dirty || formGroup.get('lastName')?.touched)) {
-            <div class="form__error">Last Name is required.</div>
+          @if (formGroup.get('lastName')?.invalid &&
+          (formGroup.get('lastName')?.dirty ||
+          formGroup.get('lastName')?.touched)) {
+          <div class="form__error">Last Name is required.</div>
           }
         </div>
       </div>
@@ -80,15 +64,26 @@
             id="birthDate"
             type="date"
             formControlName="birthDate"
-            [class.error]="formGroup.get('birthDate')?.invalid && (formGroup.get('birthDate')?.dirty || formGroup.get('birthDate')?.touched)"
+            [class.error]="
+              formGroup.get('birthDate')?.invalid &&
+              (formGroup.get('birthDate')?.dirty ||
+                formGroup.get('birthDate')?.touched)
+            "
           />
 
-          @if (formGroup.get('birthDate')?.invalid && (formGroup.get('birthDate')?.dirty || formGroup.get('birthDate')?.touched) && formGroup.get('birthDate')?.errors?.['required']) {
-            <div class="form__error">Birth Date is required.</div>
-          }
-
-          @if (formGroup.get('birthDate')?.invalid && (formGroup.get('birthDate')?.dirty || formGroup.get('birthDate')?.touched) && formGroup.get('birthDate')?.errors?.['dateGreaterThanToday']) {
-            <div class="form__error">Birth date cannot be in the future. Please enter a valid date that is today or earlier.</div>
+          @if (formGroup.get('birthDate')?.invalid &&
+          (formGroup.get('birthDate')?.dirty ||
+          formGroup.get('birthDate')?.touched) &&
+          formGroup.get('birthDate')?.errors?.['required']) {
+          <div class="form__error">Birth Date is required.</div>
+          } @if (formGroup.get('birthDate')?.invalid &&
+          (formGroup.get('birthDate')?.dirty ||
+          formGroup.get('birthDate')?.touched) &&
+          formGroup.get('birthDate')?.errors?.['dateGreaterThanToday']) {
+          <div class="form__error">
+            Birth date cannot be in the future. Please enter a valid date that
+            is today or earlier.
+          </div>
           }
         </div>
       </div>
@@ -102,15 +97,20 @@
             type="email"
             placeholder="Enter email"
             formControlName="email"
-            [class.error]="formGroup.get('email')?.invalid && (formGroup.get('email')?.dirty || formGroup.get('email')?.touched)"
+            [class.error]="
+              formGroup.get('email')?.invalid &&
+              (formGroup.get('email')?.dirty || formGroup.get('email')?.touched)
+            "
           />
 
-          @if (formGroup.get('email')?.invalid && (formGroup.get('email')?.dirty || formGroup.get('email')?.touched) && formGroup.get('email')?.errors?.['required']) {
-            <div class="form__error">Email is required.</div>
-          }
-
-          @if (formGroup.get('email')?.invalid && (formGroup.get('email')?.dirty || formGroup.get('email')?.touched) && formGroup.get('email')?.errors?.['email']) {
-            <div class="form__error">Please provide a valid email.</div>
+          @if (formGroup.get('email')?.invalid && (formGroup.get('email')?.dirty
+          || formGroup.get('email')?.touched) &&
+          formGroup.get('email')?.errors?.['required']) {
+          <div class="form__error">Email is required.</div>
+          } @if (formGroup.get('email')?.invalid &&
+          (formGroup.get('email')?.dirty || formGroup.get('email')?.touched) &&
+          formGroup.get('email')?.errors?.['email']) {
+          <div class="form__error">Please provide a valid email.</div>
           }
         </div>
       </div>
@@ -125,11 +125,17 @@
             placeholder="Enter username"
             formControlName="username"
             [value]="formGroup.get('username')?.value"
-            [class.error]="formGroup.get('username')?.invalid && (formGroup.get('username')?.dirty || formGroup.get('username')?.touched)"
+            [class.error]="
+              formGroup.get('username')?.invalid &&
+              (formGroup.get('username')?.dirty ||
+                formGroup.get('username')?.touched)
+            "
           />
 
-          @if (formGroup.get('username')?.invalid && (formGroup.get('username')?.dirty || formGroup.get('username')?.touched)) {
-            <div class="form__error">Username is required.</div>
+          @if (formGroup.get('username')?.invalid &&
+          (formGroup.get('username')?.dirty ||
+          formGroup.get('username')?.touched)) {
+          <div class="form__error">Username is required.</div>
           }
         </div>
       </div>
@@ -140,7 +146,10 @@
         <div class="form__content">
           <div
             class="select-wrapper"
-            [class.error]="formGroup.get('group')?.invalid && (formGroup.get('group')?.dirty || formGroup.get('group')?.touched)"
+            [class.error]="
+              formGroup.get('group')?.invalid &&
+              (formGroup.get('group')?.dirty || formGroup.get('group')?.touched)
+            "
           >
             <select
               id="group"
@@ -157,8 +166,9 @@
             </select>
           </div>
 
-          @if (formGroup.get('group')?.invalid && (formGroup.get('group')?.dirty || formGroup.get('group')?.touched)) {
-            <div class="form__error">Group is required.</div>
+          @if (formGroup.get('group')?.invalid && (formGroup.get('group')?.dirty
+          || formGroup.get('group')?.touched)) {
+          <div class="form__error">Group is required.</div>
           }
         </div>
       </div>
@@ -172,11 +182,17 @@
             type="number"
             placeholder="Enter basic salary"
             formControlName="basicSalary"
-            [class.error]="formGroup.get('basicSalary')?.invalid && (formGroup.get('basicSalary')?.dirty || formGroup.get('basicSalary')?.touched)"
+            [class.error]="
+              formGroup.get('basicSalary')?.invalid &&
+              (formGroup.get('basicSalary')?.dirty ||
+                formGroup.get('basicSalary')?.touched)
+            "
           />
 
-          @if (formGroup.get('basicSalary')?.invalid && (formGroup.get('basicSalary')?.dirty || formGroup.get('basicSalary')?.touched)) {
-            <div class="form__error">Basic Salary is required.</div>
+          @if (formGroup.get('basicSalary')?.invalid &&
+          (formGroup.get('basicSalary')?.dirty ||
+          formGroup.get('basicSalary')?.touched)) {
+          <div class="form__error">Basic Salary is required.</div>
           }
         </div>
       </div>
@@ -187,7 +203,11 @@
         <div class="form__content">
           <div
             class="select-wrapper"
-            [class.error]="formGroup.get('status')?.invalid && (formGroup.get('status')?.dirty || formGroup.get('status')?.touched)"
+            [class.error]="
+              formGroup.get('status')?.invalid &&
+              (formGroup.get('status')?.dirty ||
+                formGroup.get('status')?.touched)
+            "
           >
             <select
               id="status"
@@ -202,8 +222,10 @@
             </select>
           </div>
 
-          @if (formGroup.get('status')?.invalid && (formGroup.get('status')?.dirty || formGroup.get('status')?.touched)) {
-            <div class="form__error">Status is required.</div>
+          @if (formGroup.get('status')?.invalid &&
+          (formGroup.get('status')?.dirty || formGroup.get('status')?.touched))
+          {
+          <div class="form__error">Status is required.</div>
           }
         </div>
       </div>
@@ -217,11 +239,17 @@
             rows="4"
             placeholder="Enter description"
             formControlName="description"
-            [class.error]="formGroup.get('description')?.invalid && (formGroup.get('description')?.dirty || formGroup.get('description')?.touched)"
+            [class.error]="
+              formGroup.get('description')?.invalid &&
+              (formGroup.get('description')?.dirty ||
+                formGroup.get('description')?.touched)
+            "
           ></textarea>
 
-          @if (formGroup.get('description')?.invalid && (formGroup.get('description')?.dirty || formGroup.get('description')?.touched)) {
-            <div class="form__error">Description is required.</div>
+          @if (formGroup.get('description')?.invalid &&
+          (formGroup.get('description')?.dirty ||
+          formGroup.get('description')?.touched)) {
+          <div class="form__error">Description is required.</div>
           }
         </div>
       </div>

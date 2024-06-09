@@ -1,13 +1,14 @@
 import { Employee } from '@shared/interfaces/employee.interface';
 import { CommonModule } from '@angular/common';
 import { StatusComponent } from '@shared/components/status.component';
+import { PageTitleComponent } from '@shared/components/page-title.component';
 import { LocalStorageService } from '@shared/services/local-storage.service';
 
 import { OnInit, Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-  imports: [CommonModule, StatusComponent],
+  imports: [CommonModule, StatusComponent, PageTitleComponent],
   selector: 'app-employee-details',
   styleUrl: 'details.component.scss',
   standalone: true,
