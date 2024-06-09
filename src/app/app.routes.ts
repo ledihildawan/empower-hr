@@ -4,6 +4,7 @@ import { Error403Component } from './routes/sessions/403.component';
 import { Error404Component } from './routes/sessions/404.component';
 import { Error500Component } from './routes/sessions/500.component';
 import { DashboardComponent } from './routes/dashboard/dashboard.component';
+import { authenticationGuard } from '@core/authentication/authentication.guard';
 import { AdminLayoutComponent } from 'theme/admin-layout/admin-layout.component';
 
 export const routes: Routes = [
@@ -21,6 +22,8 @@ export const routes: Routes = [
         loadChildren: () => import('./routes/employees/employees.routes').then((m) => m.routes),
       },
     ],
+    canActivate: [authenticationGuard],
+    canActivateChild: [authenticationGuard],
   },
   {
     path: 'auth',
