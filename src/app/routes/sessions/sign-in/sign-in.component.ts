@@ -2,6 +2,7 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 import { OnInit, Component } from '@angular/core';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 import {
   FormGroup,
@@ -9,9 +10,10 @@ import {
   FormBuilder,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { LocalStorageService } from '@shared/services/local-storage.service';
 
 @Component({
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ToastrModule, CommonModule, ReactiveFormsModule],
   selector: 'app-login',
   styleUrl: 'sign-in.component.scss',
   standalone: true,
@@ -31,7 +33,9 @@ export class SignInComponent implements OnInit {
 
   constructor(
     private readonly _router: Router,
-    private readonly _formBuilder: FormBuilder
+    private readonly _formBuilder: FormBuilder,
+    private readonly _toastrService: ToastrService,
+    private readonly _localStorageService: LocalStorageService
   ) {}
 
   private _setupForm(): void {
@@ -51,6 +55,23 @@ export class SignInComponent implements OnInit {
 
       return;
     }
+
+    const { username, password } = this.formGroup.getRawValue();
+
+    if (username !== 'EmpowerHR' || password !== 'EmpowerHR') {
+      this._toastrService.error(
+        'Invalid username or password. Please try again.',
+        'Login Failed'
+      );
+
+      this.isSubmitted = false;
+
+      return;
+    }
+
+    this._localStorageService.set('u', {
+      access_token: Math.random().toString(36).slice(2),
+    });
 
     this._router.navigateByUrl('/');
   }

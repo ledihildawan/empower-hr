@@ -20,7 +20,5 @@ export class DashboardComponent implements OnInit {
     }
 
     this.employees = this._localStorageService.get('employees');
-
-    console.log(this.employees);
   }
 }

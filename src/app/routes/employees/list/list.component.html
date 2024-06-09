@@ -33,11 +33,12 @@
 <div class="card">
   <div class="card__actions">
     <input-search
+      [value]="q"
       (onClear)="handleClearInputSearch()"
       (onChange)="handleChangeInputSearch($event)"
     ></input-search>
 
-    <button class="btn btn--outline">
+    <!-- <button class="btn btn--outline">
       <svg
         width="20"
         height="20"
@@ -83,7 +84,7 @@
         />
       </svg>
       <span>Filters</span>
-    </button>
+    </button> -->
   </div>
 
   <div class="card__content" style="overflow-x: auto">
@@ -105,7 +106,11 @@
       <tbody>
         @for (employee of employees; track employee.id; let index = $index) {
         <tr>
-          <td>{{ employee.firstName + " " + employee.lastName }}</td>
+          <td>
+            <span class="link" (click)="goToDetails(employee.id)">{{
+              employee.firstName + " " + employee.lastName
+            }}</span>
+          </td>
           <td>{{ employee.group }}</td>
           <td>{{ employee.email }}</td>
           <td>{{ employee.birthDate | date : "longDate" }}</td>

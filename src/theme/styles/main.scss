@@ -13,6 +13,12 @@ body {
 @import "components/button";
 @import "components/table-actions";
 
+.link {
+  color: #0984bc;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .icon {
   cursor: pointer;
   transition: opacity 0.25s ease-in-out;

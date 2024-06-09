@@ -55,7 +55,13 @@ export class AddEmployeeComponent implements OnInit {
     let employees = this._localStorageService.get('employees');
 
     if (employees) {
-      employees = [...employees, this.formGroup.getRawValue()];
+      employees = [
+        ...employees,
+        {
+          id: Math.random().toString(36).slice(2),
+          ...this.formGroup.getRawValue(),
+        },
+      ];
     }
 
     this._localStorageService.set('employees', employees);

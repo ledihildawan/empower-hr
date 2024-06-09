@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
+import { Input, Output, Component, EventEmitter } from '@angular/core';
 
 @Component({
   imports: [CommonModule],
@@ -9,6 +10,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: 'input-search.component.html',
 })
 export class InputSearchComponent {
+  @Input()
   public value: string = '';
 
   @Output('onClear')

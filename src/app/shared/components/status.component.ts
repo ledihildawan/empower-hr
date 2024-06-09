@@ -10,6 +10,7 @@ import { Input, Component } from '@angular/core';
         border-radius: 1rem;
         padding: 0.125rem 0.725rem;
         color: #fff;
+        text-wrap: nowrap;
 
         &.active {
           background-color: #28a745;
@@ -39,5 +40,5 @@ import { Input, Component } from '@angular/core';
 })
 export class StatusComponent {
   @Input()
-  public value!: string;
+  public value!: string | undefined;
 }

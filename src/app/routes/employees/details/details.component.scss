@@ -1,0 +1,20 @@
+:host {
+  display: block;
+  padding: 2rem 1rem 1rem;
+}
+
+.card {
+  &__content {
+    display: grid;
+    gap: 1rem;
+
+    @media (width >= 600px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .field {
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+  }
+}

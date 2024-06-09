@@ -39,6 +39,7 @@ export class EmployeesComponent implements OnInit {
     { key: 'birthDate', label: 'Birth Date', order: 0, isSort: true },
     { key: 'status', label: 'Status', order: 0, isSort: true },
   ];
+  public q: string = '';
   public isSorted: boolean = false;
   public isSearched: boolean = false;
   public currentPage: number = 1;
@@ -78,6 +79,14 @@ export class EmployeesComponent implements OnInit {
     this._router.navigateByUrl(path);
   }
 
+  public goToDetails(id: string): void {
+    if (this.q) {
+      this._localStorageService.set('searchedEmployee', this.q);
+    }
+
+    this.navigateTo(`/employees/${id}/details`);
+  }
+
   public handleDelete(id: string): void {
     this.filteredEmployees = this.filteredEmployees.filter(
       (el: Employee): boolean => el.id !== id
@@ -100,6 +109,7 @@ export class EmployeesComponent implements OnInit {
   }
 
   public handleClearInputSearch(): void {
+    this.q = '';
     this.isSearched = false;
     this.endIdx = this.itemsPerPage;
     this.startIdx = 0;
@@ -118,6 +128,8 @@ export class EmployeesComponent implements OnInit {
         }
       );
     }
+
+    this._localStorageService.remove('searchedEmployee');
   }
 
   public handleClickTableHeading(data: any, index: number): void {
@@ -205,6 +217,7 @@ export class EmployeesComponent implements OnInit {
     this.currentPage = 1;
 
     if (!q && this.isSearched) {
+      this.q = '';
       this.isSearched = false;
       this.filteredEmployees = [...this._initialEmployees];
       this.totalItems = this.filteredEmployees.length;
@@ -213,6 +226,7 @@ export class EmployeesComponent implements OnInit {
     }
 
     if (!q) {
+      this.q = '';
       this.filteredEmployees = [];
       this.totalItems = this.filteredEmployees.length;
 
@@ -221,13 +235,13 @@ export class EmployeesComponent implements OnInit {
 
     this.filteredEmployees = this._initialEmployees.filter(
       (employee: Employee): boolean => {
-        return (
-          employee.firstName.toLowerCase().includes(q.toLowerCase()) ||
-          employee.lastName.toLowerCase().includes(q.toLowerCase())
-        );
+        const name: string = `${employee.firstName} ${employee.lastName}`;
+
+        return name.toLowerCase().includes(q.toLowerCase());
       }
     );
 
+    this.q = q;
     this.totalItems = this.filteredEmployees.length;
 
     this.isSearched = true;
@@ -245,6 +259,12 @@ export class EmployeesComponent implements OnInit {
   public ngOnInit(): void {
     if (!this._localStorageService.has('employees')) {
       this._localStorageService.set('employees', employees);
+    }
+
+    if (this._localStorageService.has('searchedEmployee')) {
+      this.q = this._localStorageService.get('searchedEmployee');
+
+      this.handleChangeInputSearch(this.q);
     }
   }
 }
