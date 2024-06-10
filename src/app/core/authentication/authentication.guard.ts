@@ -14,7 +14,5 @@ export const authenticationGuard = (
   const router = inject(Router);
   const localStorageService = inject(LocalStorageService);
 
-  console.log(localStorageService.get('u'));
-
   return localStorageService.get('u') ? true : router.parseUrl('/auth/sign-in');
 };
